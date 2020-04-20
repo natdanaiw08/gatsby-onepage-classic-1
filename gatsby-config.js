@@ -1,4 +1,5 @@
 module.exports = {
+  pathPrefix: process.env.PREFIX,
   siteMetadata: {
     title: `Onepage website`,
     description: `รับทำเว็บไซต์ราคาถูก`,
