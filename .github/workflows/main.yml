@@ -35,7 +35,7 @@ jobs:
           # Set a generated GITHUB_TOKEN for pushing to the remote branch.
           #github_token: # optional
           # Set a personal access token for pushing to the remote branch.
-          personal_token: ${{ GITHUB_TOKEN }}
+          personal_token: ${{ secrets.GITHUB_TOKEN }}
           # Set a target branch for deployment.
           publish_branch: gh-pages
           # Set an input directory for deployment.
