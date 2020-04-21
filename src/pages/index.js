@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
@@ -9,7 +9,7 @@ import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 const HomePage = ({ data }) => {
-  const { site, mockup650x425, allFeatureMarkdown } = data
+  const { site, homeMarkdownRemark, aboutMarkdownRemark, featureMarkdownRemark, serviceMarkdownRemark, contactMarkdownRemark } = data
 
   const [collapse, setCollapse] = useState(true);
   const [path, setPath] = useState("main");
@@ -18,11 +18,12 @@ const HomePage = ({ data }) => {
   const s2 = useRef(null)
   const s3 = useRef(null)
   const s4 = useRef(null)
+  const s5 = useRef(null)
   const executeScroll = (ref) => ref.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
 
   return (
     <Layout>
-      <SEO title="Home" classNames="stretched" />
+      <SEO title="Website Creator" classNames="stretched" />
       <header id="header" className={`sticky-header`}>
         <div className="" id="header-wrap">
           <div className="container clearfix">
@@ -41,24 +42,29 @@ const HomePage = ({ data }) => {
                 <nav id="primary-menu">
                   <ul className={`one-page-menu  ${collapse ? '' : 'd-block'}`}>
                     <li className={path === "main" ? "current" : ""}>
-                      <button className="button button-link" onClick={() => {executeScroll(s1); setPath("main");}}>
-                        Home
-                    </button>
+                      <button className="button button-link" onClick={() => { executeScroll(s1); setPath("main"); }}>
+                        {homeMarkdownRemark.frontmatter.menu}
+                      </button>
                     </li>
                     <li className={path === "about" ? "current" : ""}>
-                      <button className="button button-link" onClick={() => {executeScroll(s2); setPath("about");}}>
-                        About
-                    </button>
+                      <button className="button button-link" onClick={() => { executeScroll(s2); setPath("about"); }}>
+                        {aboutMarkdownRemark.frontmatter.menu}
+                      </button>
                     </li>
                     <li className={path === "service" ? "current" : ""}>
-                      <button className="button button-link" onClick={() => {executeScroll(s3); setPath("service");}}>
-                        Service
-                    </button>
+                      <button className="button button-link" onClick={() => { executeScroll(s3); setPath("feature"); }}>
+                        {featureMarkdownRemark.frontmatter.menu}
+                      </button>
+                    </li>
+                    <li className={path === "feature" ? "current" : ""}>
+                      <button className="button button-link" onClick={() => { executeScroll(s4); setPath("service"); }}>
+                        {serviceMarkdownRemark.frontmatter.menu}
+                      </button>
                     </li>
                     <li className={path === "contact" ? "current" : ""}>
-                      <button className="button button-link" onClick={() =>{ executeScroll(s4); setPath("contact");}}>
-                        Contact
-                    </button>
+                      <button className="button button-link" onClick={() => { executeScroll(s5); setPath("contact"); }}>
+                        {contactMarkdownRemark.frontmatter.menu}
+                      </button>
                     </li>
                   </ul>
                 </nav>
@@ -70,29 +76,37 @@ const HomePage = ({ data }) => {
       <section id="slider" style={{ background: '#222' }} ref={s1}>
         <div className="center dark pt-60 pb-60">
           <div className="divcenter" style={{ maxWidth: '400px' }}>
-            <Img fluid={mockup650x425.childImageSharp.fluid} />
+            <Img fluid={homeMarkdownRemark.frontmatter.image.childImageSharp.fluid} />
           </div>
           <h1 className="divcenter" style={{ maxWidth: '700px', fontSize: '40px' }}>
-            LOREM IPSUM IS PLACEHOLDER
+            {homeMarkdownRemark.frontmatter.title}
           </h1>
         </div>
       </section>
+      {homeMarkdownRemark.html ?
+        <section className="pt-60 pb-60">
+          <div className="container">
+            <p className="lead" dangerouslySetInnerHTML={{ __html: homeMarkdownRemark.html }}></p>
+          </div>
+        </section> : false
+      }
       <section className="pt-60 pt-20-xs pb-60 pb-20-xs" ref={s2}>
         <div className="container">
           <div className="row">
             <div className="col-lg-6 col-md-12 order-md-2 order-1">
-              <Img fluid={mockup650x425.childImageSharp.fluid} />
+              <Img fluid={aboutMarkdownRemark.frontmatter.image.childImageSharp.fluid} />
             </div>
             <div className="col-lg-6 col-md-12 order-md-1 order-2">
               <div className="heading-block">
-                <h2>PURPOSE AND USAGE</h2>
-                <span className="before-heading">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                <h2>{aboutMarkdownRemark.frontmatter.title}</h2>
+                <span className="before-heading">
+                  {aboutMarkdownRemark.frontmatter.description}
+                </span>
               </div>
-              <p className="lead">
-                Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.
-                The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of
-                Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with
-              </p>
+              {aboutMarkdownRemark.html ?
+                <p className="lead" dangerouslySetInnerHTML={{ __html: aboutMarkdownRemark.html }}>
+                </p> : false
+              }
             </div>
           </div>
         </div>
@@ -101,10 +115,10 @@ const HomePage = ({ data }) => {
         <div className="center">
           <div className="container">
             <h2 className="divcenter font-body" style={{ maxWidth: '700px', fontSize: '40px' }}>
-              Summing up, if the copy is diverting attention from the design it’s because it’s not up to task.
-              </h2>
+            {featureMarkdownRemark.frontmatter.title}
+            </h2>
             <p className="lead divcenter" style={{ maxWidth: '750px' }}>
-              Lorem Ipsum is a tool that can be useful, used intentionally it may help solve some problems. If you go about content strategy the wrong way, fix that problem.
+              {featureMarkdownRemark.frontmatter.description}
             </p>
           </div>
         </div>
@@ -112,56 +126,56 @@ const HomePage = ({ data }) => {
       <section className="pt-60 pb-60 pt-20-xs pb-20-xs">
         <div className="container center">
           <h2 className="divcenter nobottommargin" style={{ maxWidth: '700px' }}>
-            What is Lorem Ipsum?
+            {featureMarkdownRemark.frontmatter.subtitle}
           </h2>
           <p className="lead divcenter" style={{ maxWidth: '800px' }}>
-            Lorem Ipsum is a tool that can be useful, used intentionally it may help some problems.
+            {featureMarkdownRemark.frontmatter.subdescription}
           </p>
           <div className="row">
-            {allFeatureMarkdown.edges.map(({ node }) => {
-              const title = node.frontmatter.title || node.fields.slug
+            {featureMarkdownRemark.frontmatter.list.map((item, i) => {
+              const title = item.title || ""
               return (
-                <div className="col-12 col-lg-4" key={node.fields.slug}>
+                <div className="col-12 col-lg-4" key={i}>
                   <div className="card card-block_container text-center">
                     <Img className="card-img-top"
-                      fluid={node.frontmatter.image.childImageSharp.fluid}
+                      fluid={item.image.childImageSharp.fluid}
                     />
                     <div className="card-body">
                       <h5 className="card-title card-block__title ">
                         {title}
                       </h5>
-                      <p className="card-text card-block__text" dangerouslySetInnerHTML={{
-                        __html: node.frontmatter.description
-                      }} />
+                      <p className="card-text card-block__text">
+                        {item.description}
+                      </p>
                     </div>
                   </div>
                 </div>
               )
             })}
           </div>
+          <p className="lead" dangerouslySetInnerHTML={{ __html: featureMarkdownRemark.html }} ></p>
         </div>
       </section>
-      <section className="pt-60 pt-20-xs pb-60 pb-20-xs">
+      <section className="pt-60 pt-20-xs pb-60 pb-20-xs" ref={s4}>
         <div className="container">
           <div className="row">
             <div className="col-lg-7 col-md-12">
-              <Img fluid={mockup650x425.childImageSharp.fluid} />
+              <Img fluid={serviceMarkdownRemark.frontmatter.image.childImageSharp.fluid} />
             </div>
             <div className="col-lg-5 col-md-12">
               <div className="heading-block">
-                <h2>PURPOSE AND USAGE</h2>
-                <span className="before-heading">Lorem ipsum dolor sit amet, consectetur adipiscing elit</span>
+                <h2> {serviceMarkdownRemark.frontmatter.title}</h2>
+                <span className="before-heading"> {serviceMarkdownRemark.frontmatter.description}</span>
               </div>
-              <p className="lead">
-                Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs.
-                The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of
-                Cicero's De Finibus Bonorum et Malorum for use in a type specimen book. It usually begins with
-              </p>
+              <p className="lead" dangerouslySetInnerHTML={{ __html: serviceMarkdownRemark.html }} ></p>
             </div>
           </div>
         </div>
       </section>
-      <section className="center pt-60 pt-20-xs pb-60 pb-20-xs" ref={s4}>
+      <div className="container">
+        <p className="lead" dangerouslySetInnerHTML={{ __html: contactMarkdownRemark.html }} ></p>
+      </div>
+      <section className="center pt-60 pt-20-xs pb-60 pb-20-xs" ref={s5}>
         <div className="container">
           <div className="row">
             <div className="col-12">
@@ -169,19 +183,34 @@ const HomePage = ({ data }) => {
                 <FontAwesomeIcon icon={faFacebookMessenger} size="4x" />
               </div>
               <h2 className="divcenter" style={{ maxWidth: '700px', fontSize: '40px' }}>
-                Stay Connected!
+                {contactMarkdownRemark.frontmatter.title}
               </h2>
               <p className="lead divcenter" style={{ maxWidth: '750px' }}>
-                Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out.
-                  </p>
-              <a href="https://m.me/whatsiteman" target="_blank" rel="noopener noreferrer"
+                {contactMarkdownRemark.frontmatter.description}
+              </p>
+              <a href={contactMarkdownRemark.frontmatter.button_link} target="_blank" rel="noopener noreferrer"
                 className="button button-border t600">
-                Contact me!
+                {contactMarkdownRemark.frontmatter.button_text}
               </a>
             </div>
           </div>
         </div>
       </section>
+      <footer className="page-footer">
+        <ul className="copyright">
+          <li>{contactMarkdownRemark.frontmatter.footer}</li>
+        </ul>
+        <ul className="contact">
+          <li className="powered">
+            <a href="https://whatsiteman.com/" target="_blank" rel="noopener noreferrer">Powered by whatsiteman</a>
+          </li>
+          <li>
+            <a href="https://www.facebook.com/whatsiteman/" target="_blank" rel="noopener noreferrer">
+              <img width="25" src="https://www.whatsiteman.com/static/logo-ac6b36e89eb24d46b2146c8c0e563eb1.png" alt="whatsiteman"/>
+            </a>
+          </li>
+        </ul>
+      </footer>
     </Layout>
   )
 }
@@ -198,39 +227,93 @@ export const pageQuery =
         author
       }
     },
-    headerImg: file(relativePath: { eq: "header.png" }) {
-      childImageSharp {
-        fluid(quality: 100) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    },
-    mockup650x425: file(relativePath: { eq: "650x425.jpg" }) {
-      childImageSharp {
-        fluid(quality: 100) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    },
-    allFeatureMarkdown: allMarkdownRemark(sort: { fields: [frontmatter___title], order: DESC }) {
-      edges {
-        node {
-          excerpt
-          fields {
-            slug
+    homeMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/home.md$/"})  
+    {
+      html
+      frontmatter {
+        menu
+        title
+        image {
+          childImageSharp {
+            fluid(quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
           }
-          frontmatter {
-            title
-            description
-            image {
-              childImageSharp {
-                fluid(quality: 100) {
-                  ...GatsbyImageSharpFluid
-                }
+        }
+      }
+    },
+    aboutMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/about.md$/"})  
+    {
+      html
+      frontmatter {
+        menu
+        title
+        description
+        image {
+          childImageSharp {
+            fluid(quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    },
+    featureMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/feature.md$/"})  
+    {
+      html
+      frontmatter {
+        menu
+        title
+        description
+        subtitle
+        subdescription
+        image {
+          childImageSharp {
+            fluid(quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+        list {
+          description
+          title
+          image {
+            childImageSharp {
+              fluid(quality: 100) {
+                ...GatsbyImageSharpFluid
               }
             }
           }
         }
+      }
+    },
+    serviceMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/service.md$/"})  
+    {
+      html
+      frontmatter {
+        menu
+        title
+        description
+        image {
+          childImageSharp {
+            fluid(quality: 100) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+      }
+    },
+    contactMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/contact.md$/"})  
+    {
+      html
+      frontmatter {
+        menu
+        icon
+        title
+        description
+        button_text
+        button_link
+        footer
       }
     }
   }

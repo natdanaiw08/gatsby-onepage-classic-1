@@ -1,8 +1,8 @@
 module.exports = {
   pathPrefix: process.env.PREFIX,
   siteMetadata: {
-    title: `Onepage website`,
-    description: `รับทำเว็บไซต์ราคาถูก`,
+    title: `Whatsiteman`,
+    description: `สร้างเว็บไซต์ฟรี`,
     author: `Whatsiteman studio`,
   },
   plugins: [    
@@ -32,8 +32,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        path: `${__dirname}/content/feature`,
-        name: `feature`,
+        path: `${__dirname}/content`,
+        name: `content`,
       },
     },
     {

@@ -39,6 +39,13 @@ footer.page-footer {
         float: right;
         li {
             margin: 0 0.3rem;
+            &.powered {
+                vertical-align: top;
+               a {
+                line-height: 25px;
+                height: 25px;
+               }
+            }
             a:hover svg {
                 color: #222;
             }
