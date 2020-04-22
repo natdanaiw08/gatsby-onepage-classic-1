@@ -16,5 +16,5 @@ $ cd whatsiteman
 $ npm install -d
 $ node app
 ```
-This will create the whatsiteman image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of Dillinger.
+This will create the whatsiteman image and pull in the necessary dependencies. Be sure to swap out `${package.json.version}` with the actual version of it.
 

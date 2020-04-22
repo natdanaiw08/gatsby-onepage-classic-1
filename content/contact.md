@@ -12,7 +12,6 @@ button_text: Contact me!
 
 button_link: https://m.me/whatsiteman
 
-footer: © 2020 Whatsiteman
 
 ---
 
@@ -30,5 +29,5 @@ Whatsiteman uses a number of open source projects to work properly:
 * [Breakdance](https://breakdance.github.io/breakdance/) - HTML to Markdown converter
 * [jQuery] - duh
 
-And of course Dillinger itself is open source with a [public repository][dill]
+And of course itself is open source with a [public repository][dill]
  on GitHub.

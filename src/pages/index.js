@@ -2,14 +2,13 @@ import React, { useState, useRef } from 'react';
 import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
-import logo from '../images/logo.png'
 import Img from "gatsby-image"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 
 const HomePage = ({ data }) => {
-  const { site, homeMarkdownRemark, aboutMarkdownRemark, featureMarkdownRemark, serviceMarkdownRemark, contactMarkdownRemark } = data
+  const { site, headerMarkdownRemark, homeMarkdownRemark, aboutMarkdownRemark, featureMarkdownRemark, serviceMarkdownRemark, contactMarkdownRemark, footerMarkdownRemark } = data
 
   const [collapse, setCollapse] = useState(true);
   const [path, setPath] = useState("main");
@@ -34,7 +33,7 @@ const HomePage = ({ data }) => {
               <div className="col-lg-5 col-12">
                 <div id="logo">
                   <Link className="brand-logo" to="/">
-                    <img src={logo} alt={site.siteMetadata.title} />
+                    <Img fixed={headerMarkdownRemark.frontmatter.logo.childImageSharp.fixed}  alt={site.siteMetadata.title}/>
                   </Link>
                 </div>
               </div>
@@ -86,7 +85,7 @@ const HomePage = ({ data }) => {
       {homeMarkdownRemark.html ?
         <section className="pt-60 pb-60">
           <div className="container">
-            <p className="lead" dangerouslySetInnerHTML={{ __html: homeMarkdownRemark.html }}></p>
+            <p className="lead" dangerouslySetInnerHTML={{ __html: homeMarkdownRemark.html }} />
           </div>
         </section> : false
       }
@@ -104,8 +103,7 @@ const HomePage = ({ data }) => {
                 </span>
               </div>
               {aboutMarkdownRemark.html ?
-                <p className="lead" dangerouslySetInnerHTML={{ __html: aboutMarkdownRemark.html }}>
-                </p> : false
+                <p className="lead" dangerouslySetInnerHTML={{ __html: aboutMarkdownRemark.html }} /> : false
               }
             </div>
           </div>
@@ -153,7 +151,7 @@ const HomePage = ({ data }) => {
               )
             })}
           </div>
-          <p className="lead" dangerouslySetInnerHTML={{ __html: featureMarkdownRemark.html }} ></p>
+          <p className="lead" dangerouslySetInnerHTML={{ __html: featureMarkdownRemark.html }} />
         </div>
       </section>
       <section className="pt-60 pt-20-xs pb-60 pb-20-xs" ref={s4}>
@@ -167,13 +165,13 @@ const HomePage = ({ data }) => {
                 <h2> {serviceMarkdownRemark.frontmatter.title}</h2>
                 <span className="before-heading"> {serviceMarkdownRemark.frontmatter.description}</span>
               </div>
-              <p className="lead" dangerouslySetInnerHTML={{ __html: serviceMarkdownRemark.html }} ></p>
+              <p className="lead" dangerouslySetInnerHTML={{ __html: serviceMarkdownRemark.html }} />
             </div>
           </div>
         </div>
       </section>
       <div className="container">
-        <p className="lead" dangerouslySetInnerHTML={{ __html: contactMarkdownRemark.html }} ></p>
+        <p className="lead" dangerouslySetInnerHTML={{ __html: contactMarkdownRemark.html }} />
       </div>
       <section className="center pt-60 pt-20-xs pb-60 pb-20-xs" ref={s5}>
         <div className="container">
@@ -198,7 +196,7 @@ const HomePage = ({ data }) => {
       </section>
       <footer className="page-footer">
         <ul className="copyright">
-          <li>{contactMarkdownRemark.frontmatter.footer}</li>
+          <li>{footerMarkdownRemark.frontmatter.footer}</li>
         </ul>
         <ul className="contact">
           <li className="powered">
@@ -225,6 +223,18 @@ export const pageQuery =
         title
         description
         author
+      }
+    },
+    headerMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/header.md$/"})  
+    {
+      frontmatter {
+        logo {
+          childImageSharp {
+            fixed(width: 100, height: 100, quality: 100) {
+              ...GatsbyImageSharpFixed
+            }
+          }
+        }
       }
     },
     homeMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/home.md$/"})  
@@ -313,8 +323,13 @@ export const pageQuery =
         description
         button_text
         button_link
+      }
+    },
+    footerMarkdownRemark: markdownRemark(fileAbsolutePath: {regex: "/footer.md$/"})  
+    {
+      frontmatter {
         footer
       }
-    }
+    },
   }
 `
