@@ -6,7 +6,7 @@ import Img from "gatsby-image"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFacebookMessenger } from '@fortawesome/free-brands-svg-icons'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
-
+import logo from '../images/logo.png'
 const HomePage = ({ data }) => {
   const { site, headerMarkdownRemark, homeMarkdownRemark, aboutMarkdownRemark, featureMarkdownRemark, serviceMarkdownRemark, contactMarkdownRemark, footerMarkdownRemark } = data
 
@@ -85,7 +85,7 @@ const HomePage = ({ data }) => {
       {homeMarkdownRemark.html ?
         <section className="pt-60 pb-60">
           <div className="container">
-            <p className="lead" dangerouslySetInnerHTML={{ __html: homeMarkdownRemark.html }} />
+            <section className="lead" dangerouslySetInnerHTML={{ __html: homeMarkdownRemark.html }} />
           </div>
         </section> : false
       }
@@ -103,7 +103,7 @@ const HomePage = ({ data }) => {
                 </span>
               </div>
               {aboutMarkdownRemark.html ?
-                <p className="lead" dangerouslySetInnerHTML={{ __html: aboutMarkdownRemark.html }} /> : false
+                <section className="lead" dangerouslySetInnerHTML={{ __html: aboutMarkdownRemark.html }} /> : false
               }
             </div>
           </div>
@@ -151,7 +151,7 @@ const HomePage = ({ data }) => {
               )
             })}
           </div>
-          <p className="lead" dangerouslySetInnerHTML={{ __html: featureMarkdownRemark.html }} />
+          <section className="lead" dangerouslySetInnerHTML={{ __html: featureMarkdownRemark.html }} />
         </div>
       </section>
       <section className="pt-60 pt-20-xs pb-60 pb-20-xs" ref={s4}>
@@ -165,13 +165,13 @@ const HomePage = ({ data }) => {
                 <h2> {serviceMarkdownRemark.frontmatter.title}</h2>
                 <span className="before-heading"> {serviceMarkdownRemark.frontmatter.description}</span>
               </div>
-              <p className="lead" dangerouslySetInnerHTML={{ __html: serviceMarkdownRemark.html }} />
+              <section className="lead" dangerouslySetInnerHTML={{ __html: serviceMarkdownRemark.html }} />
             </div>
           </div>
         </div>
       </section>
       <div className="container">
-        <p className="lead" dangerouslySetInnerHTML={{ __html: contactMarkdownRemark.html }} />
+        <section className="lead" dangerouslySetInnerHTML={{ __html: contactMarkdownRemark.html }} />
       </div>
       <section className="center pt-60 pt-20-xs pb-60 pb-20-xs" ref={s5}>
         <div className="container">
@@ -204,7 +204,7 @@ const HomePage = ({ data }) => {
           </li>
           <li>
             <a href="https://www.facebook.com/whatsiteman/" target="_blank" rel="noopener noreferrer">
-              <img width="25" src="https://www.whatsiteman.com/static/logo-ac6b36e89eb24d46b2146c8c0e563eb1.png" alt="whatsiteman"/>
+              <img width="25" src={logo} alt="whatsiteman"/>
             </a>
           </li>
         </ul>
