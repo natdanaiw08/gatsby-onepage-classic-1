@@ -1,9 +1,8 @@
 name: CI
 
-on:
-  create:
-    tags:
-      - v*
+on: 
+  repository_dispatch:
+    types: [deploy]
         
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
